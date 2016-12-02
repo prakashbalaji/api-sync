@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: development
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/api_sync_dev
+    username: root
+    password:
+    testOnBorrow: true
+    testWhileIdle: true
+    validationQuery: select version()
+    maxActive: ${MAX_ACTIVE:10}
+    maxIdle: ${MAX_IDLE:10}
+    minIdle: ${MIN_IDLE:0}
+    minEvictableIdleTimeMillis: ${MIN_EVICTABLE_IDLE_TIME_MILLIS:10000}
+    timeBetweenEvictionRunsMillis: ${TIME_BETWEEN_EVICTION_RUNS_MILLIS:5000}
+
+  jpa.show-sql: true
+
+
+flyway:
+  url: jdbc:mysql://localhost:3306/api_sync_dev
+  user: root
+  password:
+  enabled: true
