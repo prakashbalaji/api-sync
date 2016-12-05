@@ -31,7 +31,10 @@ public class SyncConfiguration {
                 .addDeleteBy("customerId")
                 .addFieldToCopy("customerId", "customer_id")
                 .addFieldToCopy("firstName", "first_name")
-                .addFieldToCopy("lastName", "last_name");
+                .addFieldToCopy("lastName", "last_name")
+                .addFieldToCopy("age", "age")
+                .addFieldToCopy("salary", "salary")
+                .addAssociation("ONE_TO_MANY", "addresses", "customerId");
 
         SyncConfig providerSyncConfig = new SyncConfig()
                 .addTableName("providers")
@@ -40,9 +43,18 @@ public class SyncConfiguration {
                 .addFieldToCopy("firstName", "first_name")
                 .addFieldToCopy("lastName", "last_name");
 
+        SyncConfig addressSyncConfig = new SyncConfig()
+                .addTableName("addresses")
+                .addDeleteBy("addressId")
+                .addFieldToCopy("customerId", "customer_id")
+                .addFieldToCopy("addressId", "address_id")
+                .addFieldToCopy("city", "city")
+                .addFieldToCopy("street", "street");
+
+
         return new SyncConfigs(jooqCreate)
                 .addSyncConfig("customers", customerSyncConfig)
-                .addSyncConfig("providers", providerSyncConfig
-                );
+                .addSyncConfig("providers", providerSyncConfig)
+                .addSyncConfig("addresses", addressSyncConfig);
     }
 }

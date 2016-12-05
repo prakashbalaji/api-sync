@@ -1,5 +1,6 @@
 package com.pro.sync;
 
+import org.jooq.Delete;
 import org.jooq.DeleteQuery;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
@@ -10,12 +11,7 @@ public class SyncQueries {
 
     Set<SyncQuery> queries = new LinkedHashSet<>();
 
-    public SyncQueries addSyncQuery(SyncQuery query){
-        queries.add(query);
-        return this;
-    }
-
-    public SyncQueries addDeleteQueries(List<DeleteQuery<Record>> deletes){
+    public SyncQueries addDeleteQueries(List<Delete<Record>> deletes){
         this.queries.add(SyncQuery.deleteQueries(deletes));
         return this;
     }
@@ -28,11 +24,11 @@ public class SyncQueries {
 
     public static class SyncQuery {
         List<InsertQuery<Record>> inserts = new ArrayList<>();
-        List<DeleteQuery<Record>> deletes = new ArrayList<>();
+        List<Delete<Record>> deletes = new ArrayList<>();
 
 
 
-        public static SyncQuery deleteQueries(List<DeleteQuery<Record>> deletes) {
+        public static SyncQuery deleteQueries(List<Delete<Record>> deletes) {
             SyncQuery syncQuery = new SyncQuery();
             syncQuery.deletes = deletes;
             return syncQuery;

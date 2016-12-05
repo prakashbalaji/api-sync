@@ -24,10 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
@@ -111,7 +108,18 @@ public class MyStepdefs {
 
         List<Map<String, Object>> actualValues = jooqCreate.select(fields).from(tableName).fetchMaps();
 
-        assertThat(actualValues,is(expectedValues));
+        List<Map<String, String>> actualValuesAsString = new ArrayList<>();
+        for (Map<String, Object> actualValue : actualValues) {
+            Map<String, String> m = new HashMap<>();
+            for (String key : actualValue.keySet()) {
+                if(actualValue.get(key)!=null){
+                    m.put(key, actualValue.get(key).toString());
+                }
+            }
+            actualValuesAsString.add(m);
+        }
+
+        assertThat(actualValuesAsString, is(expectedValues));
     }
 
 }

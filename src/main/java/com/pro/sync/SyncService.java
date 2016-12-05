@@ -1,6 +1,6 @@
 package com.pro.sync;
 
-import org.jooq.DeleteQuery;
+import org.jooq.Delete;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class SyncService {
     public void sync(String syncName, String json) {
         SyncQueries queries = syncConfigs.generateSyncQueries(syncName, json);
         for (SyncQueries.SyncQuery query : queries.queries) {
-            for (DeleteQuery<Record> delete : query.deletes) {
+            for (Delete<Record> delete : query.deletes) {
                 delete.execute();
             }
             for (InsertQuery<Record> insert : query.inserts) {
